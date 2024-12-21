@@ -1,0 +1,26 @@
+{
+  "name": "ide",
+  "version": "0.0.1",
+  "description": "Tryin' to code an IDE that fits my way of coding stuffs...",
+  "author": "Loïc DURAND",
+  "license": "Apache-2.0",
+  "private": true,
+  "scripts": {
+    "start": "npx nodemon bin/www",
+    "watch": "npx nodemon -w public/ bin/www"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "^4.21.2",
+    "hbs": "^4.2.0",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1",
+    "unviewed": "^1.0.6"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9",
+    "parcel-bundler": "^1.12.5",
+    "sass": "^1.83.0"
+  }
+}
