@@ -6,16 +6,14 @@
   "license": "Apache-2.0",
   "private": true,
   "scripts": {
-    "start": "npx nodemon bin/www",
-    "watch": "npx nodemon -w public/ bin/www"
+    "start": "npx nodemon -w public/ bin/www",
+    "watch": "npx parcel index.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "^4.21.2",
     "hbs": "^4.2.0",
-    "http-errors": "~1.6.3",
-    "morgan": "~1.9.1",
     "unviewed": "^1.0.6"
   },
   "devDependencies": {
