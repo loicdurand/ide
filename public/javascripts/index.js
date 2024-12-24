@@ -19,13 +19,11 @@ const //
 // RECH. PROJECT_EXISTS
 db.projects.findOne({ name: current_project }, (err, project) => {
 
-  if (project === null)
+  if (project === null && current_project)
     db.projects.insert({ name: current_project });
 
   // RECH. PROJECTS
   db.projects.find({}, (err, projects) => {
-
-    console.log({ projects });
 
     const // 
       title = new App({
@@ -41,36 +39,63 @@ db.projects.findOne({ name: current_project }, (err, project) => {
         }
       }),
 
-      create_project_li = ({ project, active }) => new App({
-
-        container: document.querySelector('#project-template'),
-
-        project,
-        active,
-
-        events: {
-          onupdate: () => ({
-            '.project-name': ({ target, project, active }) => {
-              target.innerHTML = project;
-              target.classList[active ? 'add' : 'remove']('active');
-            }
-          })
-        }
-      }),
-
       projects_ul = new App({
 
         container: '#projects-container',
 
-        projects,
+        projects: projects.map(({ name }) => name),
         active_project: current_project,
+        elements: {
+          'li': ({ project, active }) => new App({
+
+            container: document.querySelector('#project-template'),
+
+            project,
+            active,
+
+            confirmDeleteElement({ project, active, entity, parent }) {
+              if (window.confirm(`Confirmez-vous vouloir supprimer le projet [${project}]`)) {
+                db.projects.remove({ name: project }, (err, nb_removed) => {
+                  const active_removed = active;
+                  if (nb_removed) {
+                    App.remove(entity);
+                    db.projects.find({}, (err, projects) => {
+                      projects_ul.state.projects = projects.map(({ name }) => name);
+                      // si le projet supprimé était celui actif, on "active" le dernier autre
+                      // en redirigeant vers '/{projet_actif}
+                      if (active_removed)
+                        window.location.href = projects[projects.length - 1].name;
+                      else
+                        App.update(projects_ul);
+                    });
+                  }
+                });
+              }
+            },
+
+            events: {
+              onupdate: () => ({
+                '.project-name': ({ target, project, active }) => {
+                  target.innerHTML = project;
+                  target.setAttribute('href', `/${project}`);
+                  target.classList[active ? 'add' : 'remove']('active');
+                }
+              }),
+              onclick: actions => ({
+                '.close': (state) => {
+                  actions.confirmDeleteElement(state);
+                }
+              })
+            }
+          })
+        },
 
         events: {
           onupdate: () => ({
-            '#projects-list': ({ target, projects, active }) => {
+            '#projects-list': ({ target, projects, active, elements }) => {
               target.innerHTML = '';
               projects.forEach(project => {
-                const project_li = create_project_li({ project: project.name, active: current_project === project.name });
+                const project_li = elements.li({ project, active: current_project === project });
                 target.append(project_li.container);
               });
             }
