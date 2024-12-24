@@ -10,6 +10,7 @@
     "watch": "npx parcel index.js"
   },
   "dependencies": {
+    "@seald-io/nedb": "^4.0.4",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "^4.21.2",
