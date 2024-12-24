@@ -3,7 +3,6 @@ import '@seald-io/nedb/browser-version/out/nedb';
 import App from 'unviewed';
 import Path from './lib/Path';
 
-
 const // 
   db = {
     projects: new Nedb({ filename: 'projects.db', autoload: true }),
@@ -25,6 +24,7 @@ db.projects.findOne({ name: current_project }, (err, project) => {
   // RECH. PROJECTS
   db.projects.find({}, (err, projects) => {
 
+    // --> gestion de la balise <title> du document
     const // 
       title = new App({
         container: head_title,
@@ -38,7 +38,9 @@ db.projects.findOne({ name: current_project }, (err, project) => {
           })
         }
       }),
+      // <-- fin gestion de la balise <title> du document
 
+      // --> gestion de la balise <nav id="projects-container">
       projects_ul = new App({
 
         container: '#projects-container',
@@ -54,7 +56,7 @@ db.projects.findOne({ name: current_project }, (err, project) => {
             active,
 
             confirmDeleteElement({ project, active, entity, parent }) {
-              if (window.confirm(`Confirmez-vous vouloir supprimer le projet [${project}]`)) {
+              if (window.confirm(`Le projet "${project}" va être définitivement supprimé.`)) {
                 db.projects.remove({ name: project }, (err, nb_removed) => {
                   const active_removed = active;
                   if (nb_removed) {
@@ -75,9 +77,9 @@ db.projects.findOne({ name: current_project }, (err, project) => {
 
             events: {
               onupdate: () => ({
-                '.project-name': ({ target, project, active }) => {
+                '.project-link': ({ target, project }) => target.setAttribute('href', `/${project}`),
+                '.project-header': ({ target, project, active }) => {
                   target.innerHTML = project;
-                  target.setAttribute('href', `/${project}`);
                   target.classList[active ? 'add' : 'remove']('active');
                 }
               }),
@@ -103,6 +105,8 @@ db.projects.findOne({ name: current_project }, (err, project) => {
         }
 
       });
+    // <-- fin gestion de la balise <nav id="projects-container">
+
 
   })
   // FIN RECH. PROJECTS

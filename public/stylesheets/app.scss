@@ -1,9 +1,8 @@
 @use "./starter-complet";
+@use "./components/projects-container.scss";
 
-body {
+body.container-fluid {
     font-size: 18px;
-}
-
-.active {
-    color: var(--green-5);
+    margin: 0;
+    padding: 0;
 }

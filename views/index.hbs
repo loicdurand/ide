@@ -1,14 +1,14 @@
 <template id="project-template">
   <li class="project">
-    <h2>
-      <a class="project-name">
+    <a class="project-link">
+      <h2 class="project-header">
         {{!-- Affiche le nom du projet --}}
-      </a>
-    </h2>
-    <button
-      type="button"
-      class="close"
-    >&#215;</button>
+      </h2>
+      <button
+        type="button"
+        class="close"
+      >&#215;</button>
+    </a>
   </li>
 </template>
 
@@ -16,7 +16,7 @@
   class="projects-container"
   id="projects-container"
 >
-  <ul id="projects-list">
+  <ul id="projects-list" class="projects-list">
 
   </ul>
 </nav>
