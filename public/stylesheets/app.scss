@@ -1,9 +1,9 @@
 @use "./starter-complet";
 
-body{
+body {
     font-size: 18px;
 }
 
-h1{
-    color: var(--red-5);
+.active {
+    color: var(--green-5);
 }

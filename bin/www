@@ -10,7 +10,7 @@ const //
   path = require('path'),
   debug = require('debug'),
   http = require('http'),
-  App = require('../app.js');
+  App = require('../server/app.js');
 
 debug('ide:server');
 

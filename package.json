@@ -6,7 +6,7 @@
   "license": "Apache-2.0",
   "private": true,
   "scripts": {
-    "start": "npx nodemon -w public/ bin/www",
+    "start": "npx nodemon -w public -w server -w views bin/www",
     "watch": "npx parcel index.js"
   },
   "dependencies": {
